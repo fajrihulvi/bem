@@ -8,6 +8,30 @@ class Peminjaman_model extends CI_model{
 		$this->db->join('barang', 'barang.id = kalender_peminjaman.id_barang');
 		$this->db->join('ormawa', 'ormawa.id = kalender_peminjaman.id_ormawa');
 		$this->db->join('users', 'users.nim = kalender_peminjaman.id_peminjam');
+		$this->db->where('kalender_peminjaman.isAccept', 'diterima');
+		return $this->db->order_by('kalender_peminjaman.id', 'DESC')->get()->result_array();
+	}
+
+	public function getByTgl($bulan, $tahun)
+	{
+		$this->db->select('kalender_peminjaman.id as kalender_id, kalender_peminjaman.tgl_pinjam, kalender_peminjaman.tgl_kembali, kalender_peminjaman.lama_pinjam, kalender_peminjaman.jumlah, kalender_peminjaman.status, barang.nama_barang, barang.satuan,  ormawa.nama, users.nama as peminjam');
+		$this->db->from('kalender_peminjaman');
+		$this->db->join('barang', 'barang.id = kalender_peminjaman.id_barang');
+		$this->db->join('ormawa', 'ormawa.id = kalender_peminjaman.id_ormawa');
+		$this->db->join('users', 'users.nim = kalender_peminjaman.id_peminjam');
+		$this->db->where('kalender_peminjaman.isAccept', 'diterima');
+		$this->db->where('month(tgl_pinjam)', $bulan);
+		$this->db->where('year(tgl_pinjam)', $tahun);
+		return $this->db->order_by('kalender_peminjaman.id', 'DESC')->get()->result_array();
+	}
+
+	public function getMinta()
+	{
+		$this->db->select('kalender_peminjaman.id as kalender_id, kalender_peminjaman.tgl_pinjam, kalender_peminjaman.tgl_kembali, kalender_peminjaman.lama_pinjam, kalender_peminjaman.jumlah, kalender_peminjaman.isAccept, barang.nama_barang, barang.satuan,  ormawa.nama, users.nama as peminjam');
+		$this->db->from('kalender_peminjaman');
+		$this->db->join('barang', 'barang.id = kalender_peminjaman.id_barang');
+		$this->db->join('ormawa', 'ormawa.id = kalender_peminjaman.id_ormawa');
+		$this->db->join('users', 'users.nim = kalender_peminjaman.id_peminjam');
 		return $this->db->order_by('kalender_peminjaman.id', 'DESC')->get()->result_array();
 	}
 

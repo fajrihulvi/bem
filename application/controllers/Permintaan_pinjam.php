@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Kalender_peminjaman extends CI_Controller
+class Permintaan_pinjam extends CI_Controller
 {
 	public function __construct()
 	{
@@ -13,21 +13,57 @@ class Kalender_peminjaman extends CI_Controller
 
 	public function index()
 	{
-		if (!$this->session->userdata('hak_akses') == 'mahasiswa') {
+		if ($this->session->userdata('hak_akses') == 'mahasiswa') {
             redirect('home');
         }
-		$data['title']  = 'Kalender Peminjaman';
-		$data['record'] = $this->m_peminjaman->getAll();
-		$data['pinjam'] = $this->db->get_where('kalender_peminjaman', ['isAccept' => 'pending'])->num_rows();
-		$data['barang'] = $this->db->get('barang')->result_array();
-		$data['users']  = $this->db->get('users')->result_array();
-		$data['ormawa'] = $this->db->get('ormawa')->result_array();
-		$this->template->load('admin/template', 'master/kalender/peminjaman', $data);
+		$data['title']  = 'Permintaan Peminjaman';
+		$data['record'] = $this->m_peminjaman->getMinta();
+		$this->template->load('admin/template', 'master/kalender/permintaan_pinjam', $data);
 	}
 
-	public function tampilubah()
+	public function terima()
 	{
-		echo json_encode($this->m_peminjaman->getById($_POST['id']));
+		if ($this->session->userdata('hak_akses') == 'mahasiswa') {
+            redirect('home');
+        }
+		$data = [
+			'isAccept' => 'diterima'
+		];
+		if($this->db->update('kalender_peminjaman', $data, ['id' => $_POST['id']])){
+			$result = [
+				'status' => true,
+				'message'=> 'Permintaan Peminjaman disetujui'
+			];
+		}else{
+			$result = [
+				'status' => false,
+				'message'=> 'Permintaan Peminjaman Gagal di Ubah'
+			];
+		}
+		echo json_encode($result);
+	}
+
+	public function tolak()
+	{
+		if ($this->session->userdata('hak_akses') == 'mahasiswa') {
+            redirect('home');
+        }
+
+        $data = [
+			'isAccept' => 'ditolak'
+		];
+		if($this->db->update('kalender_peminjaman', $data, ['id' => $_POST['id']])){
+			$result = [
+				'status' => true,
+				'message'=> 'Permintaan Peminjaman ditolak'
+			];
+		}else{
+			$result = [
+				'status' => false,
+				'message'=> 'Permintaan Peminjaman Gagal di Ubah'
+			];
+		}
+		echo json_encode($result);
 	}
 
 	public function tambah()

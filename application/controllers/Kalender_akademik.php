@@ -36,6 +36,7 @@ class Kalender_akademik extends CI_Controller
 				'tgl_selesai' => $this->input->post('tgl_selesai'),
 				'id_jenis' => $this->input->post('jenis'),
 				'keterangan' => $this->input->post('keterangan'),
+				'semester' => $this->input->post('semester'),
 				'tahun_ajar' => $this->input->post('tahun_ajar')
 			];
 
@@ -59,6 +60,7 @@ class Kalender_akademik extends CI_Controller
 				'tgl_selesai' => $this->input->post('tgl_selesai'),
 				'id_jenis' => $this->input->post('jenis'),
 				'keterangan' => $this->input->post('keterangan'),
+				'semester' => $this->input->post('semester'),
 				'tahun_ajar' => $this->input->post('tahun_ajar')
 			];
 			// var_dump($id); die;

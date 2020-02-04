@@ -1,13 +1,27 @@
 <div class="pcoded-main-container">
     <div class="pcoded-content">
-        <?= $this->session->flashdata('message'); ?>
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Kalender Kegiatan</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="<?= base_url('home') ?>"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="">Kalender</a></li>
+                            <li class="breadcrumb-item"><a href="#">Kegiatan</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
         <div class="row">
             <div class="col-md-12">
+                <?= $this->session->flashdata('message'); ?>
                 <div class="card">
-                    <div class="card-header" style="padding-bottom: 5px;">
-                        <h4>Kalender Kegiatan</h4>
-                        <hr>
-                    </div>
                     <div class="card-body">
                         <button id="kegiatanAdd" class="btn btn-primary mb-2 mr-2"  data-toggle="modal" data-target="#kegiatanModal"><i class="fas fa-plus"></i> Tambah Data</button>
                         <a href="<?= base_url('jenis_kegiatan/index') ?>" class="btn btn-warning mb-2"></i>Data Jenis</a>

@@ -20,4 +20,16 @@ class Kegiatan_model extends CI_model{
 		return $this->db->order_by('kalender_kegiatan.id', 'DESC')->get()->row();
 	}
 
+	public function getKegiatanTgl($bulan, $tahun)
+	{
+		$this->db->select('kalender_kegiatan.tgl_mulai, kalender_kegiatan.tgl_selesai, kalender_kegiatan.nama_kegiatan, jenis_kegiatan.jenis, ormawa.nama as nama_ormawa');
+		$this->db->from('kalender_kegiatan');
+		$this->db->join('jenis_kegiatan', 'jenis_kegiatan.id = kalender_kegiatan.id_jenis_kegiatan');
+		$this->db->join('ormawa', 'ormawa.id = kalender_kegiatan.id_ormawa');
+		$this->db->order_by('kalender_kegiatan.tgl_mulai', 'DESC');
+		$this->db->where('MONTH(tgl_mulai)', $bulan);
+		$this->db->where('YEAR(tgl_mulai)', $tahun);
+		return $this->db->get()->result_array();
+	}
+
 }

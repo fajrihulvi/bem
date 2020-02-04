@@ -66,10 +66,7 @@ class User extends CI_Controller
 
 	public function tampilubah()
 	{
-		if (!$this->ion_auth->is_admin()){
-			redirect('home', 'refresh');
-		}
-		echo json_encode($this->db->get_where('users', ['id' => $_POST['id']])->row());
+		echo json_encode($this->db->get_where('users', ['nim' => $_POST['id']])->row());
 	}
 
 	public function edit()
@@ -82,18 +79,36 @@ class User extends CI_Controller
 
 		if ($this->form_validation->run() === TRUE)
 		{
-			$data = [
-				'nama' => $this->input->post('nama'),
-				'email' => $this->input->post('email'),
-				'no_telp' => $this->input->post('no_telp'),
-			];
+			if(isset($_POST['hak_akses'])){
+				$data = [
+					'nama'      => $this->input->post('nama'),
+					'email'     => $this->input->post('email'),
+					'no_telp'   => $this->input->post('no_telp'),
+					'hak_akses' => $this->input->post('hak_akses')
+				];
+			}else{
+				$data = [
+					'nama'    => $this->input->post('nama'),
+					'email'   => $this->input->post('email'),
+					'no_telp' => $this->input->post('no_telp')
+				];
+			}
+			
 			$this->db->where('nim', $this->input->post('nim'));
 			$this->db->update('users', $data);
 			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Berhasil Ubah Data!</div>');
-			redirect('user/profile', 'refresh');
+			if(isset($_POST['hak_akses'])){
+				redirect('user', 'refresh');
+			}else{
+				redirect('user/profile', 'refresh');
+			}
 		}else{
 			$this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert"> Gagal Ubah Data!</div>');
-			redirect('user/profile', 'refresh');
+			if(isset($_POST['hak_akses'])){
+				redirect('user', 'refresh');
+			}else{
+				redirect('user/profile', 'refresh');
+			}
 		}
 	}
 
@@ -103,7 +118,7 @@ class User extends CI_Controller
             redirect('auth/blocked');
         }
 		
-		if($this->db->delete('users', ['id' => $id])){
+		if($this->db->delete('users', ['nim' => $id])){
 			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Berhasil Hapus Data!</div>');
 			redirect('user', 'refresh');
 		}else{

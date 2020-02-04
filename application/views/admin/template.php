@@ -9,7 +9,7 @@
     <meta name="keywords" content="" />
     <meta name="author" content="Codedthemes" />
     <!-- Favicon icon -->
-    <link rel="icon" href="<?= base_url('assets/images/favicon.ico') ?>" type="image/x-icon">
+    <link rel="icon" href="<?= base_url('assets/images/bem.png') ?>" type="image/x-icon">
     <!-- font awesome -->
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     <!-- vendor css -->
@@ -83,6 +83,39 @@
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li>
+                    <?php date_default_timezone_set('Asia/Jakarta'); ?>
+                    <?php $notif = $this->db->order_by('id', 'DESC')->get_where('notifikasi', ['status' => '0'])->result_array(); ?>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="icon feather icon-bell"></i>
+                            <?= (count($notif) !== 0)?"<span class='badge bg-danger'>":'' ?><span class="sr-only"></span></span></a>
+                        <div class="dropdown-menu dropdown-menu-right notification">
+                            <div class="noti-head">
+                                <h6 class="d-inline-block m-b-0">Notifikasi</h6>
+                                <div class="float-right">
+                                    <a href="<?= base_url('admin/notif_clear') ?>" class="m-r-10">Tandai Semua Dibaca</a>
+                                </div>
+                            </div>
+                            <ul class="list-group">
+                                <?php foreach ($notif as $row): ?>
+                                <li class="notification">
+                                    <a href="<?= base_url($row['link']) ?>" style="padding: 0;" class="notif" data-id="<?= $row['id'] ?>">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong><?= $row['judul'] ?></strong><span class="n-time text-muted float-right"><i class="icon feather icon-clock m-r-10"></i><?= waktu_lalu($row['time']) ?></span></p>
+                                                <p><?= $row['isi'] ?></p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <?php endforeach; ?>
+                            </ul>
+                            <div class="noti-footer">
+                                <a href="<?= base_url('admin/show_notif') ?>">Tampilkan Semua</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
                     <div class="dropdown drp-user">
                         <a href="#!" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="<?= base_url('assets/images/user/default.png') ?>" class="img-radius wid-40" alt="User-Profile-Image">
@@ -99,6 +132,9 @@
                             <ul class="pro-body">
                                 <li><a href="<?= base_url('user/profile') ?>" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>
                                 <li><a href="<?= base_url('user/ubah_pass') ?>" class="dropdown-item"><i class="feather icon-lock"></i> Change Password</a></li>
+                                <?php if($this->session->userdata('hak_akses') == 'admin'): ?>
+                                <li><a href="<?= base_url('user') ?>" class="dropdown-item"><i class="feather icon-users"></i> Manajemen Users</a></li>
+                                <?php endif; ?>
                             </ul>
                         </div>
                     </div>

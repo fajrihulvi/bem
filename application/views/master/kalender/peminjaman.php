@@ -1,15 +1,30 @@
 <div class="pcoded-main-container">
     <div class="pcoded-content">
-        <?= $this->session->flashdata('message'); ?>
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Kalender Peminjaman</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="<?= base_url('home') ?>"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="">Kalender</a></li>
+                            <li class="breadcrumb-item"><a href="#">Peminjaman</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
         <div class="row">
             <div class="col-md-12">
+                <?= $this->session->flashdata('message'); ?>
                 <div class="card">
-                    <div class="card-header" style="padding-bottom: 5px;">
-                        <h4>Kalender Peminjaman</h4>
-                        <hr>
-                    </div>
                     <div class="card-body">
-                        <button id="peminjamanAdd" class="btn btn-primary mb-2 mr-2"  data-toggle="modal" data-target="#peminjamanModal"><i class="fas fa-plus"></i> Tambah Data</button>
+                        <button id="peminjamanAdd" class="btn rounded btn-primary mb-2 mr-2"  data-toggle="modal" data-target="#peminjamanModal"><i class="fas fa-plus"></i> Tambah Data</button>
+                        <a href="<?= base_url('permintaan_pinjam') ?>" class="btn rounded btn-success mb-2">Permintaan Pinjam <span class="badge badge-danger"><?= ($pinjam != 0 )?$pinjam:'' ?></span></a>
                         <div class="table-responsive">
                             <table id="dataTable" class="table table-bordered table-stripped">
                                 <thead>
@@ -31,7 +46,7 @@
                                         <tr>
                                             <td><?= $i++; ?></td>
                                             <td><?= date('d F Y', strtotime($kalender['tgl_pinjam']))?></td>
-                                            <td><?= date('d F Y', strtotime($kalender['tgl_kembali']))?></td>
+                                            <td><?= ($kalender['tgl_kembali'] != '')?date('d F Y', strtotime($kalender['tgl_kembali'])): ''?></td>
                                             <td><?= $kalender['lama_pinjam']?> Hari</td>
                                             <td><?= $kalender['nama_barang']?></td>
                                             <td><?= $kalender['jumlah'].' '.$kalender['satuan']?></td>

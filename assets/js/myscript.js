@@ -123,6 +123,7 @@ $(document).ready(function() {
         $('#tgl_selesai').val('');
         $('#jenis').val('');
         $('#keterangan').val('');
+        $('#semester').val('');
         $('#tahun_ajar').val('');
     });
 
@@ -136,11 +137,13 @@ $(document).ready(function() {
             dataType: 'json',
             method: 'post',
             success: function (data) {
+                console.log(data);
                 $('#id').val(data.id);
                 $('#tgl_mulai').val(data.tgl_mulai);
                 $('#tgl_selesai').val(data.tgl_selesai);
                 $('#jenis').val(data.jenis_id);
                 $('#keterangan').val(data.keterangan);
+                $('#semester').val(data.semester);
                 $('#tahun_ajar').val(data.tahun_ajar);
             }
         });
@@ -245,19 +248,89 @@ $(document).ready(function() {
         });
     });
 
+    $('#dataTable').on('click', '#edituser',function () {
+        var id = $(this).data('id');
+        $.ajax({
+            url: base_url+'user/tampilubah',
+            data: { id: id },
+            dataType: 'json',
+            method: 'post',
+            success: function (data) {
+                $('#nim').val(data.nim);
+                $('#nama').val(data.nama);
+                $('#email').val(data.email);
+                $('#no_telp').val(data.no_telp);
+                $('#hak_akses').val(data.hak_akses);
+            }
+        });
+    });
+
+
     $('#barang').on('click',function () {
         var id = $('#barang').val();
-        console.log(id);
         $.ajax({
             url: base_url+'barang/tampilubah',
             data: { id: id },
             dataType: 'json',
             method: 'post',
             success: function (data) {
-                console.log(data);
                 $('.satuan').html(data.satuan);
             }
         });
     });
+
+    $('#dataTable').on('click', '#terima',function () {
+        var id = $(this).data('id');
+        console.log(id);
+        $.ajax({
+            url: base_url+'permintaan_pinjam/terima',
+            data: { id: id },
+            dataType: 'json',
+            method: 'post',
+            success: function (data) {
+                console.log(data)
+                //pop up
+                swal("Sukses!", "Permintaan Peminjaman Diterima", "success")
+                .then(() => {
+                    location.reload(); 
+                });
+            }
+        });
+    });
+
+    $('#dataTable').on('click', '#tolak',function () {
+        var id = $(this).data('id');
+        console.log(id);
+        $.ajax({
+            url: base_url+'permintaan_pinjam/tolak',
+            data: { id: id },
+            dataType: 'json',
+            method: 'post',
+            success: function (data) {
+                console.log(data)
+                //pop up
+                swal("Sukses!", "Permintaan Peminjaman Ditolak", "success")
+                .then(() => {
+                    location.reload(); 
+                });
+            }
+        });
+    });
+
+    $('.notif').on('click', function (e) {
+        e.preventDefault(); //cancel default action
+        var id = $(this).data('id');
+        var href = $(this).attr('href');
+        $.ajax({
+            url: base_url+'admin/notif_read',
+            data: { id: id },
+            dataType: 'json',
+            method: 'post',
+            success: function (data) {
+                window.location.href = href;
+            }
+        });
+   });
+
 
 });

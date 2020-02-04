@@ -85,7 +85,7 @@ class Informasi extends CI_Controller
 			}
 		}else{
 			$data['title'] = 'Tambah Informasi';
-			$data['informasi'] = $this->db->get('informasi', ['id' => $id])->row();
+			$data['informasi'] = $this->db->get_where('informasi', ['id' => $id])->row();
 			$this->template->load('admin/template', 'master/informasi/edit', $data);
 		}
 	}

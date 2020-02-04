@@ -69,6 +69,7 @@ class Auth extends CI_Controller
         ]);
         $this->form_validation->set_rules('email', 'Email', 'required|trim');
         $this->form_validation->set_rules('no_telp', 'No Telepon', 'required|trim');
+        $this->form_validation->set_rules('ormawa', 'Ormawa', 'required|trim');
         $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[3]|matches[konfir-password]', [
             'matches' => 'Password Tidak Cocok!',
             'min_length' => 'Password Terlalu Pendek!'
@@ -77,6 +78,7 @@ class Auth extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Register';
+            $data['ormawa'] = $this->db->get('ormawa')->result_array();
             $this->template->load('auth/template', 'auth/register', $data);
         } else {
             $nim = $this->input->post('nim', true);
@@ -86,10 +88,16 @@ class Auth extends CI_Controller
                 'email' => htmlspecialchars($this->input->post('email', true)),
                 'no_telp' => htmlspecialchars($this->input->post('no_telp', true)),
                 'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+                'id_ormawa' => htmlspecialchars($this->input->post('ormawa', true)),
                 'hak_akses' => 'mahasiswa'
             ];
-
-            if($this->db->insert('users', $data)){
+            $notif = [
+                'judul' => 'Registrasi',
+                'isi'   => $this->input->post('nama').' berhasil mendaftar',
+                'link'  => 'user',
+                'status'=> '0'
+            ];
+            if($this->db->insert('users', $data) && $this->db->insert('notifikasi', $notif)){
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Selamat!<br>Akun anda berhasil dibuat</div>');
                 redirect('auth');
             }else{

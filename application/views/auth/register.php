@@ -37,6 +37,18 @@
             <?= form_error('no_telp', '<small class="text-danger mt-0">', '</small>'); ?>
             <div class="input-group mt-3">
               <div class="input-group-prepend">
+                <span class="input-group-text"><i class="feather icon-user"></i></span>
+              </div>
+              <select name="ormawa" class="form-control">
+                <option>Pilih Ormawa</option>
+                <?php foreach($ormawa as $row): ?>
+                <option value="<?= $row['id'] ?>"><?= $row['nama'] ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+            <?= form_error('ormawa', '<small class="text-danger mt-0">', '</small>'); ?>
+            <div class="input-group mt-3">
+              <div class="input-group-prepend">
                 <span class="input-group-text"><i class="feather icon-lock"></i></span>
               </div>
               <input type="password" name="password" class="form-control" placeholder="Password">

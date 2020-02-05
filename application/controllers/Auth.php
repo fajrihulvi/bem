@@ -20,7 +20,8 @@ class Auth extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Login Page';
-            $this->template->load('auth/template', 'auth/login', $data);
+            // $this->template->load('home/template', 'auth/m_login', $data);
+            $this->load->view('auth/m_login', $data);
         } else {
             // validasinya success
             $this->_login();
@@ -57,6 +58,25 @@ class Auth extends CI_Controller
     }
 
 
+    public function admin_login()
+    {
+        if ($this->session->userdata('nim')) {
+            redirect('home');
+        }
+
+        $this->form_validation->set_rules('nim', 'nim', 'trim|required');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Login Page';
+            $this->template->load('auth/template', 'auth/admin_login', $data);
+        } else {
+            // validasinya success
+            $this->_login();
+        }
+    }
+
+
     public function registration()
     {
         if ($this->session->userdata('nim')) {
@@ -79,7 +99,7 @@ class Auth extends CI_Controller
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Register';
             $data['ormawa'] = $this->db->get('ormawa')->result_array();
-            $this->template->load('auth/template', 'auth/register', $data);
+            $this->template->load('auth/template', 'auth/m_register', $data);
         } else {
             $nim = $this->input->post('nim', true);
             $data = [

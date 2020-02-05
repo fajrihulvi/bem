@@ -86,6 +86,11 @@
 		    				<td class="text-center"><?= ($row['status']=='1')?'dikembalikan':'dipinjam' ?></td>
 		    			</tr>
 		    			<?php endforeach; ?>
+		    			<?php if(count($peminjaman) == 0): ?>
+		    			<tr>
+		    				<td colspan="9" class="text-center">data tidak ditemukan</td>
+		    			</tr>
+		    			<?php endif; ?>
 		    		</tbody>
 		    	</table>
 	    	</div>

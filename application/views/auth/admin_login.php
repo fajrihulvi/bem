@@ -13,7 +13,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="feather icon-user"></i></span>
               </div>
-              <input id="nim" name="nim" type="text" class="form-control" placeholder="NIM" value="<?= set_value('nim'); ?>">
+              <input id="nim" name="nim" type="text" class="form-control" placeholder="Username" value="<?= set_value('nim'); ?>">
             </div>
             <?= form_error('nim', '<small class="text-danger mt-0">', '</small>'); ?>
 
@@ -32,7 +32,6 @@
             </div>
             <button class="btn btn-block btn-primary mb-4" type="submit">Signin</button>
             </form>
-            <p class="mb-2 text-center">Belum punya akun? <a href="<?= base_url('auth/registration') ?>" class="f-w-400">Daftar</a></p>
           </div>
         </div>
       </div>

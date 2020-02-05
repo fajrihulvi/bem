@@ -53,30 +53,37 @@
 					</form>
 	    		</div>
 	    	</div>
-	    	<table class="table table-bordered">
-	    		<thead class="bg-primary text-white">
-	    			<tr>
-	    				<th>No.</th>
-	    				<th class="text-center">Tanggal Mulai</th>
-	    				<th class="text-center">Tanggal Selesai</th>
-	    				<th>Nama Kegiatan</th>
-	    				<th>Ormawa</th>
-	    				<th>Jenis Kegiatan</th>
-	    			</tr>
-	    		</thead>
-	    		<tbody>
-	    			<?php $i=1; foreach ($kegiatan as $row): ?>
-	    			<tr>
-	    				<th><?= $i++; ?></th>
-	    				<td class="text-center"><?= $row['tgl_mulai'] ?></td>
-	    				<td class="text-center"><?= $row['tgl_selesai'] ?></td>
-	    				<td><?= $row['nama_kegiatan'] ?></td>
-	    				<td><?= $row['nama_ormawa'] ?></td>
-	    				<td><?= $row['jenis'] ?></td>
-	    			</tr>
-	    			<?php endforeach; ?>
-	    		</tbody>
-	    	</table>
+	    	<div class="table-responsive">
+	    		<table class="table table-bordered">
+		    		<thead class="bg-primary text-white">
+		    			<tr>
+		    				<th>No.</th>
+		    				<th class="text-center">Tanggal Mulai</th>
+		    				<th class="text-center">Tanggal Selesai</th>
+		    				<th>Nama Kegiatan</th>
+		    				<th>Ormawa</th>
+		    				<th>Jenis Kegiatan</th>
+		    			</tr>
+		    		</thead>
+		    		<tbody>
+		    			<?php $i=1; foreach ($kegiatan as $row): ?>
+		    			<tr>
+		    				<th><?= $i++; ?></th>
+		    				<td class="text-center"><?= $row['tgl_mulai'] ?></td>
+		    				<td class="text-center"><?= $row['tgl_selesai'] ?></td>
+		    				<td><?= $row['nama_kegiatan'] ?></td>
+		    				<td><?= $row['nama_ormawa'] ?></td>
+		    				<td><?= $row['jenis'] ?></td>
+		    			</tr>
+		    			<?php endforeach; ?>
+		    			<?php if(count($kegiatan) == 0): ?>
+		    			<tr>
+		    				<td colspan="6" class="text-center">data tidak ditemukan</td>
+		    			</tr>
+		    			<?php endif; ?>
+		    		</tbody>
+		    	</table>
+	    	</div>
 	    </div>
     </section>
 	

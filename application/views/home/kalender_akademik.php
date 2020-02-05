@@ -40,36 +40,43 @@
 					</form>
 	    		</div>
 	    	</div>
-	    	<table class="table table-bordered">
-	    		<thead class="bg-primary text-white">
-	    			<tr>
-	    				<th>NO.</th>
-	    				<th class="text-center">KEGIATAN</th>
-	    				<th class="text-center">TANGGAL</th>
-	    			</tr>
-	    		</thead>
-	    		<tbody>
-	    			<?php $angka=1; foreach ($jenis as $row): ?>
-	    			<?php $data = $this->m_akademik->getDataJenis($row['id_jenis']); ?>
-	    			<tr>
-	    				<th><?= KonDecRomawi($angka++) ?></th>
-	    				<th><?= $row['jenis'] ?></th>
-	    				<td class="text-center">
-	    					<?= ($data[0]['keterangan'] == '')? cekTanggal($row['tgl_mulai'], $row['tgl_selesai']):'' ?>
-	    				</td>
-	    			</tr>
-	    			<?php if($data[0]['keterangan'] !== ''): ?>
-	    			<?php $i=1; foreach ($data as $val): ?>
-	    			<tr>
-	    				<td class="text-center"><?= $i++ ?></td>
-	    				<td><?= $val['keterangan'] ?></td>
-	    				<td class="text-center"><?= cekTanggal($val['tgl_mulai'], $val['tgl_selesai']) ?></td>
-	    			</tr>
-	    			<?php endforeach; ?>
-	    			<?php endif; ?>
-	    			<?php endforeach; ?>
-	    		</tbody>
-	    	</table>
+	    	<div class="table-responsive">
+	    		<table class="table table-bordered">
+		    		<thead class="bg-primary text-white">
+		    			<tr>
+		    				<th>NO.</th>
+		    				<th class="text-center">KEGIATAN</th>
+		    				<th class="text-center">TANGGAL</th>
+		    			</tr>
+		    		</thead>
+		    		<tbody>
+		    			<?php $angka=1; foreach ($jenis as $row): ?>
+		    			<?php $data = $this->m_akademik->getDataJenis($row['id_jenis']); ?>
+		    			<tr>
+		    				<th><?= KonDecRomawi($angka++) ?></th>
+		    				<th><?= $row['jenis'] ?></th>
+		    				<td class="text-center">
+		    					<?= ($data[0]['keterangan'] == '')? cekTanggal($row['tgl_mulai'], $row['tgl_selesai']):'' ?>
+		    				</td>
+		    			</tr>
+		    			<?php if($data[0]['keterangan'] !== ''): ?>
+		    			<?php $i=1; foreach ($data as $val): ?>
+		    			<tr>
+		    				<td class="text-center"><?= $i++ ?></td>
+		    				<td><?= $val['keterangan'] ?></td>
+		    				<td class="text-center"><?= cekTanggal($val['tgl_mulai'], $val['tgl_selesai']) ?></td>
+		    			</tr>
+		    			<?php endforeach; ?>
+		    			<?php endif; ?>
+		    			<?php endforeach; ?>
+		    			<?php if(count($jenis) == 0): ?>
+		    			<tr>
+		    				<td colspan="3" class="text-center">data tidak ditemukan</td>
+		    			</tr>
+		    			<?php endif; ?>
+		    		</tbody>
+		    	</table>
+	    	</div>
 	    </div>
     </section>
 	

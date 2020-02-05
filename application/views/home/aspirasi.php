@@ -19,7 +19,6 @@
 				<div class="icons-one"></div>
 				<div class="icons-two"></div>
 				<h3>Ada aspirasi? <br> Silahkan tulis dibawah.</h3>
-				
 				<!-- Default Form -->
 				<div class="default-form">
 					<form method="post" action="">
@@ -47,7 +46,7 @@
 				</div>
 				<!--End Default Form -->
 				<div class="side-image wow rubberBand" data-wow-delay="0ms" data-wow-duration="1500ms">
-					<img src="images/resource/form-icon.png" alt="" />
+					<img src="<?= base_url('assets/images/resource/form-icon.png') ?>" alt="" />
 				</div>
 			</div>
 		</div>
